@@ -1,4 +1,4 @@
-from .GameObject import GameObject
+from GameObject import GameObject
 class Tile (GameObject) :
     def __init__(self, x : int, y : int) -> None:
         self._x = x # Line index
