@@ -23,4 +23,47 @@ def remplissage_tableau():
     return initial
 
 
-print(remplissage_tableau())
+# test : print(remplissage_tableau())
+
+
+# Solveur
+# On renvoie les tableaux atteignables à partir d'une position après 1 seul déplacement du 0
+def atteignable(tableau):
+    l = []
+    tableau1 = tableau.copy()  # un cran au dessus
+    tableau2 = tableau.copy()  # un cran en dessous
+    tableau3 = tableau.copy()  # un cran à gauche
+    tableau4 = tableau.copy()  # un cran à droite
+    position = [0, 0]
+    for i in range(3):  # on cherche la position du 0
+        for j in range(3):
+            if tableau[i][j] == 0:
+                position = [i, j]
+    if (position[0] - 1) in [0, 1, 2]:
+        tableau1[position[0]][position[1]] = tableau1[position[0] - 1][
+            position[1]
+        ]  # le zéro est remplacé
+        tableau1[position[0] - 1][position[1]] = 0  # le zéro remplace
+        l.append(tableau1)
+    if (position[0] + 1) in [0, 1, 2]:
+        tableau2[position[0]][position[1]] = tableau1[position[0] + 1][
+            position[1]
+        ]  # le zéro est remplacé
+        tableau2[position[0] + 1][position[1]] = 0  # le zéro remplace
+        l.append(tableau2)
+    if (position[1] - 1) in [0, 1, 2]:
+        tableau3[position[0]][position[1]] = tableau1[position[0]][
+            position[1] - 1
+        ]  # le zéro est remplacé
+        tableau3[position[0]][position[1] - 1] = 0  # le zéro remplace
+        l.append(tableau3)
+    if (position[0] + 1) in [0, 1, 2]:
+        tableau4[position[0]][position[1]] = tableau1[position[0]][
+            position[1] + 1
+        ]  # le zéro est remplacé
+        tableau4[position[0]][position[1] + 1] = 0  # le zéro remplace
+        l.append(tableau4)
+    return l
+
+
+# un exemple : print(atteignable(np.array([[2, 3, 4], [5, 0, 1], [8, 6, 7]])))
