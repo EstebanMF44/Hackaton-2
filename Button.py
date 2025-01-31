@@ -1,4 +1,4 @@
-from .Tile import Tile
+from Tile import Tile
 import felt as ft
 
 class Button(Tile):
@@ -9,4 +9,4 @@ class Button(Tile):
         self.number = number
 
 def __repr__(self):
-    
+  pass  
