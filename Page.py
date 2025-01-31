@@ -1,6 +1,7 @@
 import flet as ft
-from Button import Button
-from Tile import Tile
+
+from .Button import Button  
+
 
 SIZE = 800
 position = [(400, 400), (400, 500), (400, 600),
@@ -19,8 +20,9 @@ class TileGame:
 
         for i in range(8):
             x, y = position[i]
-            tile = Tile(x, y)
-            button = Button(i)
+
+            button = Button(x, y, i)  # Créer un bouton
+
             self.buttonlist.append(button)
             page.controls.append(button)  # Ajouter le bouton à la page
         
