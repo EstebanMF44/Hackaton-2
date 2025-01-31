@@ -11,7 +11,7 @@ class Tile (GameObject) :
     @x.setter
     def x(self, value: int) -> None:
         if value < 0 or value > 2:
-            raise ValueError("Invalid value for x")
+            raise ValueError("Invalid value for x, must be between 0 and 2")
         self._x = value
 
     @property
@@ -21,12 +21,7 @@ class Tile (GameObject) :
     @y.setter
     def y(self, value: int) -> None:
         if value < 0 or value > 2:
-            raise ValueError("Invalid value for y")
+            raise ValueError("Invalid value for y, must be between 0 and 2")
         self._y = value
     
-    def draw(self) -> None:
-        
-
-        
-
-        pass
+    
