@@ -24,4 +24,6 @@ class Tile (GameObject) :
             raise ValueError("Invalid value for y, must be between 0 and 2")
         self._y = value
     
+    def Button(self) -> None:
+        pass
     

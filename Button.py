@@ -1,5 +1,6 @@
 from Tile import Tile
-import felt as ft
+import flet as ft
+
 
 class Button(Tile):
     def __init__(self, number) -> None:
@@ -7,6 +8,23 @@ class Button(Tile):
         self.bgcolor = ft.Colors.WHITE
         self.color = ft.Colors.BLACK
         self.number = number
+        self.position = Tile.x, Tile.y
 
-def __repr__(self):
-  pass  
+    def draw(self, Page) -> None:
+        '''dessine le bouton sur l'écran'''
+        square = ft.Container(
+        width=self._position[0],
+        height=self._position[1],
+        bgcolor=ft.colors.RED)
+
+    
+    
+
+
+
+
+
+    
+    
+
+    
