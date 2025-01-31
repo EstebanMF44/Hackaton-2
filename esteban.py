@@ -32,6 +32,7 @@ class Tile(GameObject):
         self._y = value
     
     def draw(self) -> None:
+        pass
         
 
 class Move(Tile):
@@ -55,25 +56,24 @@ class Choose(Tile):
         super().__init__(number, x, y)
 
     def choose(self):
+        pass
 
 
 
 class Background(GameObject):
 
 
-    def on_key_press(self, key, modifiers):
-        if key == arcade.key.RIGHT:
+    def on_key_press(self, event, modifiers):
+        if event.key == "ArrowRight":
             for tile in self.tilelist:
                 tile.droite()
-        elif key == arcade.key.LEFT:
+        elif event.key == "ArrowLeft":
             for tile in self.tilelist:
                 tile.gauche()
-        elif key == arcade.key.UP:
+        elif event.key == "ArrowUp":
             for tile in self.tilelist:
                 tile.haut()
-        elif key == arcade.key.DOWN:
+        elif event.key == "ArrowDown":
             for tile in self.tilelist:
                 tile.bas()
-
-class 
     
