@@ -28,9 +28,22 @@ def remplissage_tableau():
 
 
 # Solveur
+
+
+def array_to_tuple(array):
+    """Convertit un np.array en tuple immuable pour utilisation comme clé de dictionnaire."""
+    return tuple(map(tuple, array))
+
+
+def tuple_to_array(tpl):
+    """Convertit un tuple en np.array pour affichage."""
+    return np.array(tpl)
+
+
 # On renvoie les tableaux atteignables à partir d'une position après 1 seul déplacement du 0
-def generer_voisin(tableau):
+def generer_voisin(tup):
     LLL = []
+    tableau = tuple_to_array(tup)
     tableau1 = tableau.copy()  # un cran au dessus
     tableau2 = tableau.copy()  # un cran en dessous
     tableau3 = tableau.copy()  # un cran à gauche
@@ -58,7 +71,7 @@ def generer_voisin(tableau):
         ]  # le zéro est remplacé
         tableau3[position[0]][position[1] - 1] = 0  # le zéro remplace
         LLL.append(tableau3)
-    if (position[0] + 1) in [0, 1, 2]:
+    if (position[1] + 1) in [0, 1, 2]:
         tableau4[position[0]][position[1]] = tableau1[position[0]][
             position[1] + 1
         ]  # le zéro est remplacé
@@ -67,17 +80,32 @@ def generer_voisin(tableau):
     return LLL
 
 
-# un exemple : print(generer_voisin(np.array([[2, 3, 4], [5, 0, 1], [8, 6, 7]])))
+# print(generer_voisin(np.array([[1, 2, 3], [4, 5, 6], [7, 0, 8]])))
 
 
-def array_to_tuple(array):
-    """Convertit un np.array en tuple immuable pour utilisation comme clé de dictionnaire."""
-    return tuple(map(tuple, array))
+# Exemple d'utilisation :
+def creation_graph_largeur(initial):
+    # renvoie la liste des sommets atteignables depuis sommet
+    graphe = {}
+    file = deque([initial])
+    visités = set()
 
+    while file:
+        etat_courant = array_to_tuple(file.popleft())
 
-def tuple_to_array(tpl):
-    """Convertit un tuple en np.array pour affichage."""
-    return np.array(tpl)
+        if etat_courant in visités:
+            continue
+
+        visités.add(etat_courant)
+        voisins = generer_voisin(etat_courant)
+
+        graphe[array_to_tuple(etat_courant)] = voisins
+
+        for voisin in voisins:
+            if array_to_tuple(voisin) not in visités:
+                file.append(voisin)
+
+    return graphe
 
 
 def bfs_find_goal(dico, goal):
@@ -112,22 +140,10 @@ def print_path(path):
         print("Aucun chemin trouvé.")
 
 
-# Exemple d'utilisation :
-dico = {
-    array_to_tuple(np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])): [
-        np.array([[0, 0, 1], [0, 0, 0], [0, 0, 0]]),
-        np.array([[0, 0, 0], [0, 0, 1], [0, 0, 0]]),
-    ],
-    array_to_tuple(np.array([[0, 0, 1], [0, 0, 0], [0, 0, 0]])): [
-        np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]),
-        np.array([[0, 0, 1], [0, 1, 0], [0, 0, 0]]),
-    ],
-    array_to_tuple(np.array([[0, 0, 0], [0, 0, 1], [0, 0, 0]])): [
-        np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]),
-        np.array([[0, 0, 0], [0, 0, 1], [0, 1, 0]]),
-    ],
-}
-
-goal = np.array([[0, 0, 1], [0, 1, 0], [0, 0, 0]])
+initial = np.array([[1, 2, 0], [4, 5, 6], [7, 3, 8]])
+# print(generer_voisin(tuple(initial)))
+goal = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
+dico = creation_graph_largeur(initial)
+# print(dico)
 path = bfs_find_goal(dico, goal)
 print_path(path)
